@@ -1,12 +1,9 @@
 import sqlite3
 
-# Connect database
 conn = sqlite3.connect("study_history.db")
 
-# Cursor
 cursor = conn.cursor()
 
-# Create table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS history (
 
@@ -22,7 +19,6 @@ CREATE TABLE IF NOT EXISTS history (
 
 conn.commit()
 
-# Save function
 def save_history(question, answer):
 
     conn = sqlite3.connect("study_history.db")
@@ -41,7 +37,6 @@ def save_history(question, answer):
 
     conn.close()
 
-# View history
 def get_history():
 
     conn = sqlite3.connect("study_history.db")
