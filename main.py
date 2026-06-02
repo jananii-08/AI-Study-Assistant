@@ -8,8 +8,6 @@ from text_to_speech import speak_text
 from database import save_history, get_history
 
 
-# ================= WINDOW =================
-
 window = tk.Tk()
 
 window.title("AI Study Assistant")
@@ -17,8 +15,6 @@ window.geometry("1000x1000")
 window.config(bg="#f0f4f7")
 
 quiz_answers = ""
-
-# ================= FUNCTIONS =================
 
 def get_answer():
 
@@ -38,44 +34,34 @@ def get_answer():
 
     try:
 
-        # AI Answer
         answer = ask_ai(question)
         save_history(question, answer)
 
-        # Clear old text
         output_area.delete(1.0, tk.END)
 
-        # Insert answer
         output_area.insert(tk.END, answer)
 
-        # Store clickable text start
         start = output_area.index(tk.INSERT)
 
-        # Insert clickable text
         output_area.insert(
             tk.END,
             "\n\n🔊 Speak Answer"
         )
 
-        # Store clickable text end
         end = output_area.index(tk.INSERT)
 
-        # Create tag
         output_area.tag_add(
             "speak",
             start,
             end
         )
 
-        # Style
         output_area.tag_config(
             "speak",
             foreground="blue",
             underline=True,
             font=("Arial", 11, "bold")
         )
-
-        # Hand cursor
         output_area.tag_bind(
             "speak",
             "<Enter>",
@@ -88,7 +74,6 @@ def get_answer():
             lambda e: output_area.config(cursor="")
         )
 
-        # Click event
         def speak_click(event):
 
             speak_text(answer)
@@ -163,11 +148,9 @@ def create_quiz():
             "\n\nClick here to Show Answers"
         )
 
-      
         start_index = "end-1c linestart"
         end_index = "end-1c"
-
-
+        
         output_area.tag_add(
             "show_answers",
             start_index,
@@ -240,15 +223,12 @@ def use_voice_input():
 
     window.update()
 
-    # Convert speech to text
     text = listen_to_voice()
 
-    # Put text in entry box
     question_entry.delete(0, tk.END)
 
     question_entry.insert(0, text)
 
-    # Show recognized text
     output_area.delete(1.0, tk.END)
 
     output_area.insert(
@@ -256,7 +236,6 @@ def use_voice_input():
         f"You Said:\n\n{text}\n\n"
     )
 
-    # If speech recognition failed
     if text.startswith("Error"):
         return
 
@@ -333,7 +312,6 @@ Date:
             history_text
         )
 
-# ================= HEADING =================
 
 heading = tk.Label(
     window,
@@ -345,8 +323,6 @@ heading = tk.Label(
 
 heading.pack(pady=20)
 
-# ================= QUESTION LABEL =================
-
 question_label = tk.Label(
     window,
     text="Ask Your Question",
@@ -357,7 +333,6 @@ question_label = tk.Label(
 
 question_label.pack()
 
-# ================= QUESTION ENTRY =================
 
 question_entry = tk.Entry(
     window,
@@ -368,7 +343,6 @@ question_entry = tk.Entry(
 
 question_entry.pack(pady=10)
 
-# ================= BUTTON FRAME =================
 
 button_frame = tk.Frame(
     window,
@@ -377,7 +351,6 @@ button_frame = tk.Frame(
 
 button_frame.pack(pady=10)
 
-# ================= ASK BUTTON =================
 
 ask_button = tk.Button(
     button_frame,
@@ -428,20 +401,6 @@ voice_button = tk.Button(
 
 voice_button.grid(row=0, column=4, padx=10)
 
-# answers_button = tk.Button(
-#     button_frame,
-#     text="Show Answers",
-#     font=("Arial", 12, "bold"),
-#     bg="#008080",
-#     fg="white",
-#     width=15,
-#     command=show_answers
-# )
-
-# answers_button.grid(row=0, column=3, padx=10)
-
-
-# ================= ANSWER LABEL =================
 
 answer_label = tk.Label(
     window,
@@ -453,7 +412,6 @@ answer_label = tk.Label(
 
 answer_label.pack(pady=10)
 
-# ================= OUTPUT AREA =================
 
 output_area = scrolledtext.ScrolledText(
     window,
@@ -472,8 +430,6 @@ bottom_button_frame = tk.Frame(
 )
 
 bottom_button_frame.pack(pady=10)
-
-# ================= HISTORY BUTTON =================
 
 history_button = tk.Button(
     bottom_button_frame,
@@ -499,7 +455,6 @@ reset_button = tk.Button(
 
 reset_button.grid(row=0, column=1, padx=10)
 
-# ================= CLOSE BUTTON =================
 
 close_button = tk.Button(
     bottom_button_frame,
@@ -513,6 +468,5 @@ close_button = tk.Button(
 
 close_button.grid(row=0, column=2, padx=10)
 
-# ================= RUN WINDOW =================
 
 window.mainloop()
